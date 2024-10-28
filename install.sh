@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PATH=/usr/share/
+PATHP=/usr/share/
 DEVFOLDER=deviroment
 DEVPATH=/usr/share/deviroment
 HOSPATH="$HOME/HOStudios"
@@ -21,9 +21,6 @@ main(){
         install_alias
         crear_carpeta_hostudios
         descargar_proyectos_hostudios
-        
-    fi
-
     elif [[ "$respuesta" == "un" ]]; then
         echo "Iniciando desinstalación..."
         #Advertir que no se desinstalaran ni git, ni docker, ni docker-compose
@@ -34,7 +31,7 @@ main(){
 }
 
 obtener_distribucion(){
-    OS_ID=$(grep ^ID= /etc/os-release | cut -d'=' -f2)
+    OS_ID=$(grep ^ID= /etc/os-release | cut -d'=' -f2 | tr -d '"')
 }
 
 install_docker_fedora(){
@@ -135,7 +132,7 @@ install_deviroment() {
         fi
     fi
     echo "Copiando el entorno..."
-    sudo cp -r "$DEVFOLDER" "$PATH"
+    sudo cp -r "$DEVFOLDER" "$PATHP"
     install_alias
 }
 
