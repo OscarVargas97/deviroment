@@ -8,18 +8,15 @@ HOSNAME="HOStudios"
 PROYECTOS=("ethereal-realms-back" "ethereal-realms-frontend" "gp-back" "gp-front")
 
 main(){
+    obtener_distribucion
     echo "¿Deseas instalar o desinstalar? (i/un)"
     read -r respuesta
 
     if [[ "$respuesta" == "i" ]]; then
         echo "Iniciando instalación..."
-        
-        #verificar si docker, docker compose y git estan instalados
         install_docker
         install_docker_compose
         install_git
-        #Si no estan instalados advertir que el programa es necesario y se van a intalar.
-        #Confirmar si el usuario desea continuar
         install_deviroment
         install_alias
         crear_carpeta_hostudios
@@ -36,15 +33,94 @@ main(){
     fi
 }
 
+obtener_distribucion(){
+    OS_ID=$(grep ^ID= /etc/os-release | cut -d'=' -f2)
+}
 
+install_docker_fedora(){
+    echo "Instalando Docker en Fedora..."
+    # Aquí agregarías los comandos específicos para instalar Docker en Fedora
+    sudo dnf install -y dnf-plugins-core
+    sudo dnf config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
+    sudo dnf install -y docker-ce docker-ce-cli containerd.io
+    sudo systemctl start docker
+    sudo systemctl enable docker
+}
+
+install_docker_ubuntu(){
+    echo "Instalando Docker en Ubuntu..."
+    # Aquí agregarías los comandos específicos para instalar Docker en Ubuntu
+    sudo apt update
+    sudo apt install -y apt-transport-https ca-certificates curl software-properties-common
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+    echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+    sudo apt update
+    sudo apt install -y docker-ce docker-ce-cli containerd.io
+    sudo systemctl start docker
+    sudo systemctl enable docker
+}
 
 install_docker(){
+    if ! command -v docker &> /dev/null; then
+        echo "Docker no está instalado. Instalando Docker..."
+        "install_docker_$OS_ID"
+        echo "Docker ha sido instalado correctamente."
+    else
+        echo "Docker ya está instalado."
+    fi
+}
+
+install_docker_compose_fedora(){
+    sudo dnf update -y
+    sudo dnf install -y docker-compose
+    # Verificar instalación
+    docker-compose --version && echo "Docker Compose instalado correctamente en Fedora."
+}
+
+install_docker_compose_ubuntu(){
+    # Actualizar paquetes e instalar Docker Compose
+    sudo apt update -y
+    sudo apt install -y docker-compose
+    # Verificar instalación
+    docker-compose --version && echo "Docker Compose instalado correctamente en Ubuntu."
 }
 
 install_docker_compose(){
+    if ! command -v docker-compose &> /dev/null; then
+        echo "Docker Compose no está instalado. Instalando Docker..."
+        "install_docker_compose_$OS_ID"
+        echo "Docker Compose está instalado."
+    else
+        echo "Docker Compose y esta instalado"
+    fi
+}
+
+install_git_fedora(){
+    # Actualizar paquetes e instalar Git en Fedora
+    sudo dnf update -y
+    sudo dnf install -y git
+
+    # Verificar instalación
+    git --version && echo "Git instalado correctamente en Fedora."
+}
+
+install_git_ubuntu(){
+    # Actualizar paquetes e instalar Git en Ubuntu
+    sudo apt update -y
+    sudo apt install -y git
+
+    # Verificar instalación
+    git --version && echo "Git instalado correctamente en Ubuntu."
 }
 
 install_git(){ 
+    if ! command -v git &> /dev/null; then
+        echo "Git no está instalado. Instalando Git..."
+        "install_git_$OS_ID"
+        echo "Git ha sido instalado correctamente."
+    else
+        echo "Git ya está instalado."
+    fi
 }
 
 install_deviroment() {
