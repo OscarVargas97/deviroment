@@ -21,10 +21,10 @@ HOSIndex() {
     local pathos="$HOME/HOStudios"
     # Modifica el path dependiendo del primer argumento
     case "$2" in
-        etheralb)
+        etherealb)
             programhos="ethereal-realms-back"
             ;;
-        ethrealf)
+        etherealf)
             programhos="ethereal-realms-frontend"
             ;;
         gpb)
@@ -32,6 +32,9 @@ HOSIndex() {
             ;;
         gpf)
             programhos="gp-front"
+            ;;
+        deviroment)
+            programhos="deviroment"
             ;;
         *)
             echo "Argumento no reconocido. Por favor usa etheralb, ethrealf, gpb, o gpf."
