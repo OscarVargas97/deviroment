@@ -126,13 +126,10 @@ install_deviroment() {
         if [[ "$choice" == "s" || "$choice" == "S" ]]; then
             sudo rm -rf "$DEVPATH"
             echo "Directorio eliminado."
-        else
-            echo "Instalación cancelada."
-            exit 1
+            echo "Copiando el entorno..."
+            sudo cp -r "$DEVFOLDER" "$PATHP"
         fi
     fi
-    echo "Copiando el entorno..."
-    sudo cp -r "$DEVFOLDER" "$PATHP"
     install_alias
 }
 
