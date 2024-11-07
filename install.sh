@@ -128,6 +128,7 @@ install_deviroment() {
             echo "Directorio eliminado."
             echo "Copiando el entorno..."
             sudo cp -r "$DEVFOLDER" "$PATHP"
+            sudo chown -R $(whoami) $DEVPATH
         fi
     fi
     install_alias

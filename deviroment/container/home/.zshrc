@@ -42,8 +42,8 @@ zstyle ':completion:*' use-compctl false
 zstyle ':completion:*' verbose true
 
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
-zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
-source /home/$USER/powerlevel10k/powerlevel10k.zsh-theme
+zstyle ':completion:*:kill:*' command 'ps -u $(whoami) -o pid,%cpu,tty,cputime,cmd'
+source $HOME/powerlevel10k/powerlevel10k.zsh-theme
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
@@ -125,15 +125,9 @@ function rmk(){
 source ~/powerlevel10k/powerlevel10k.zsh-theme
 
 # fnm
-FNM_PATH="/home/$USER/.local/share/fnm"
+FNM_PATH="$HOME/.local/share/fnm"
 if [ -d "$FNM_PATH" ]; then
-  export PATH="/home/$USER/.local/share/fnm:$PATH"
+  export PATH="$HOME/.local/share/fnm:$PATH"
   eval "`fnm env`"
 fi
-
-
-# Turso
-export PATH="/home/$USER/.turso:$PATH"
-export PATH="$PATH:$HOME/.composer/vendor/bin"
-export GITHUB="OscarVargas97"
 
