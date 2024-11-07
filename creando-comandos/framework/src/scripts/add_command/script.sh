@@ -5,6 +5,7 @@
 ######## End Flags ########
 CommandScript() {
   initialize() {
+
     echo "¿A que proyecto pertenece el comando?"
     local _project_name
     read _project_name

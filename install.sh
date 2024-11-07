@@ -135,18 +135,44 @@ install_deviroment() {
 }
 
 uninstall_deviroment() {
-    if [ -d "$DEVPATH" ]; then
-        sudo rm -rf "$DEVPATH"
-        echo "Directorio $DEVPATH eliminado."
-    else
-        echo "El entorno no existe."
-    fi
-    uninstall_alias
+    echo "¿Qué deseas eliminar?"
+    echo "1) Solo los aliases"
+    echo "2) Solo el entorno de desarrollo"
+    echo "3) Ambos (aliases y entorno)"
+    read -p "Elige una opción [1/2/3]: " choice
+
+    case $choice in
+        1)
+            uninstall_alias
+            echo "Aliases eliminados."
+            ;;
+        2)
+            if [ -d "$DEVPATH" ]; then
+                sudo rm -rf "$DEVPATH"
+                echo "Directorio $DEVPATH eliminado."
+            else
+                echo "El entorno no existe."
+            fi
+            ;;
+        3)
+            if [ -d "$DEVPATH" ]; then
+                sudo rm -rf "$DEVPATH"
+                echo "Directorio $DEVPATH eliminado."
+            else
+                echo "El entorno no existe."
+            fi
+            uninstall_alias
+            echo "Ambos, aliases y entorno, han sido eliminados."
+            ;;
+        *)
+            echo "Opción no válida."
+            ;;
+    esac
 }
 
 install_alias() {
     # Variables
-    COMMANDS_FILE="/usr/share/deviroment/commands/commands.sh"
+    COMMANDS_FILE="/usr/share/deviroment/commands/main.sh"
     SOURCE_COMMAND="source $COMMANDS_FILE"
 
     # Verificar y agregar el source en .bashrc
