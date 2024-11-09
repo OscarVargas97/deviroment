@@ -4,13 +4,14 @@
 ## campos editables
 COMPANY_NAME="HOStudios"
 COMPANY_GIT_NAME=HappyOtterStudios
+  #Alias a utilizar             #Nombre repo github                 #Nombre contenedor desarrollo (-= No tiene) 
+
 PROYECTOS=(
-  #Alias a utilizar             #Nombre repo github                 #Nombre contenedor desarrollo    
   "etherealb"                   "ethereal-realms-back"              "etherealb_web"
   "etherealf"                   "ethereal-realms-frontend"          "etherealf_web"
-  "gpb"                         "gp-back"                           ""
-  "gpf"                         "gp-front"                          ""
-  "devironment"                 "devironment"                       ""
+  "gpb"                         "gp-back"                           "-"
+  "gpf"                         "gp-front"                          "-"
+  "devironment"                 "devironment"                       "-"
 )
 
 ## Campos Estaticos
@@ -60,7 +61,6 @@ create_programs_file(){
     local file_path="${PATH_ORIGIN_INSTALL}/deviroment/commands/src/programs.sh"
     local index=0
     local array_programs=""
-    local validprograms=""
     if [ -f "$file_path" ]; then
         rm "$file_path"
     fi
@@ -68,15 +68,14 @@ create_programs_file(){
     echo "#!/bin/bash" > "$file_path"
     echo "#WARNING! no modifique este archivo, utilice el instalador d deviroment o los comandos disponibles" > "$file_path"
     while [[ $index -lt ${#PROYECTOS[@]} ]]; do
-        validprograms+="${PROYECTOS[$index]} "
+        alias_programs+="${PROYECTOS[$index]} "
+        real_name_programs_array+="${PROYECTOS[$index+1]} "
+        container_programs_array+="${PROYECTOS[$index+2]} "
         index=$((index + 3))
     done
-    validprograms=$(echo "$validprograms" | sed 's/ *$//')
-    echo "validprograms=\"${validprograms}\"" >> "$file_path"
-    for project in "${PROYECTOS[@]}"; do
-        array_programs="$array_programs $project"
-    done
-    echo "PROYECTOS=($array_programs)" >> "$file_path"
+    echo "alias_programs=(${alias_programs})" >> "$file_path"
+    echo "real_name_programs_array=(${real_name_programs_array})" >> "$file_path"
+    echo "container_programs_array=(${container_programs_array})" >> "$file_path"
     chmod +x "$file_path"
 }
 
