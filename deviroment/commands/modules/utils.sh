@@ -3,6 +3,7 @@ RED='\e[31m'
 GREY='\e[90m'
 WHITE='\e[97m'
 NC='\e[0m' # No Color
+YELLOW='\e[33m'
 
 # Funciones para aplicar el color a los strings
 green() {
@@ -19,6 +20,10 @@ grey() {
 
 white() {
     echo -e "${WHITE}$1${NC}"
+}
+
+yellow() {
+    echo -e "${YELLOW}$1${NC}"
 }
 
 # Funciones para loguear mensajes
@@ -40,4 +45,9 @@ log_error() {
 log_step() {
     local content=$(white "[STEP] $(date '+%Y-%m-%d %H:%M:%S') - $1")
     echo "$content"
+}
+
+log_warning() {
+    local content=$(yellow "           [WARNING] $(date '+%Y-%m-%d %H:%M:%S') - $1")
+    echo "$content" 
 }

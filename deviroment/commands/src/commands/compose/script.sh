@@ -1,5 +1,5 @@
 #!/bin/bash
-hoscompose() {
+compcompose() {
     local actualpath="$PWD"
     local programpath
     programpath=$(get_program_path "$2")

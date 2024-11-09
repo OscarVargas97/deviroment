@@ -1,7 +1,13 @@
 #!/bin/bash
 
 if [[ -n $BASH_PROGRAM_INSTALLED ]]; then
-    echo "Ya tienes instalado un programa de bash basado en hos \nSi deseas instalar otro programa de bash basado en hos, abra una nueva consola"
+    (
+      source $PROJECT_DIR/modules/utils.sh
+      log_error "Ya tienes instalado un programa basado en devironment"
+      log_info "Si desea instalar un nuevo programa basado en deviroment
+                                    elimine la carga en su bashrc o zshrc o bien abra una 
+                                    nueva consola"
+    )
     return 1 2>/dev/null
 fi
 BASH_PROGRAM_INSTALLED=true
@@ -19,6 +25,6 @@ hos() {
   (
     source $PROJECT_DIR/modules/index.sh
     source $PROJECT_DIR/src/index.sh
-    HOSIndex "$@"
+    PIndex "$@"
   )
 }

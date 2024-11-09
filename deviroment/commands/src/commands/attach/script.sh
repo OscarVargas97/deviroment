@@ -1,6 +1,6 @@
 #!/bin/bash
 
-  hosattach(){
+  compattach(){
     local programcontainer
     programcontainer=$(get_program_dev_container "$2")
     if [ "$programcontainer" = "error" ]; then
