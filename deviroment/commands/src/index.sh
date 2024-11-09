@@ -1,7 +1,7 @@
 #!/bin/bash
 
 HOSIndex() {
-  local validprograms="etherealb, etherealf, gpb, gpf o devironment"
+  local validprograms="etherealb, etherealf, test ,gpb, gpf o devironment"
 
   initialize(){
     declare -A COMMANDS=(
@@ -23,6 +23,7 @@ HOSIndex() {
       gpb) result="$GITHUB_FOLDER_COMPANY/gp-back" ;;
       gpf) result="$GITHUB_FOLDER_COMPANY/gp-front" ;;
       devironment) result="$GITHUB_FOLDER_COMPANY/devironment" ;;
+      test) result="$GITHUB_FOLDER_COMPANY/test" ;;
       *) result="error" ;;
     esac
     echo "$result"
@@ -31,7 +32,7 @@ HOSIndex() {
   get_program_dev_container() {
     local container=""
     case "$1" in
-      etherealb|etherealf) container="web" ;;
+      etherealb|etherealf|test) container="web" ;;
       gpb|gpf|devironment) container="" ;;
       *) container="error" ;;
     esac

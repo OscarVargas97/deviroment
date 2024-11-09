@@ -2,7 +2,7 @@
 
 PATHP=/usr/share/
 DEVFOLDER=deviroment
-DEVPATH=/usr/share/$DEVFOLDER
+DEVPATH=/usr/share/"$DEVFOLDER"
 HOSPATH="$HOME/HOStudios"
 HOSNAME="HOStudios"
 PROYECTOS=("ethereal-realms-back" "ethereal-realms-frontend" "gp-back" "gp-front")
@@ -150,6 +150,10 @@ install_deviroment() {
             sudo cp -r "$DEVFOLDER" "$PATHP"
             sudo chown -R $(whoami) $DEVPATH
         fi
+    else
+        echo "Copiando el entorno..."
+        sudo cp -r "$DEVFOLDER" "$PATHP"
+        sudo chown -R $(whoami) $DEVPATH
     fi
     install_alias
 }
@@ -233,7 +237,6 @@ uninstall_source() {
 crear_carpeta_hostudios(){
     if [ -d "$HOSPATH" ]; then
         echo "La carpeta ya existe"
-        exit 1
     else
         mkdir "$HOSPATH"
     fi
