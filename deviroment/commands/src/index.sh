@@ -5,112 +5,96 @@ HOSIndex() {
 
   initialize(){
     declare -A COMMANDS=(
-      ["home"]="hoshome"
       ["code"]="hoscode"
-      ["rcode"]="hosrcode"
-      ["-h"]="run_show_help"
       ["compose"]="hoscompose"
+      ["rcode"]="hosrcode"
+      ["attach"]="hosattach"
+      ["-h"]="run_show_help"
     )
+    echo "$1"
     parse_args "$@"
     eval_and_run_command "$@"
   }
 
   get_program_path() {
-    # Define el path base que puede ser modificado
-    local pathos="$HOME/HOStudios"
-
-    # Modifica el path dependiendo del primer argumento
     case "$1" in
-      etherealb)
-        result="$pathos/ethereal-realms-back"
-        ;;
-      etherealf)
-        result="$pathos/ethereal-realms-frontend"
-        ;;
-      gpb)
-        result="$pathos/gp-back"
-        ;;
-      gpf)
-        result="$pathos/gp-front"
-        ;;
-      devironment)
-        result="$pathos/devironment"
-        ;;
-      *)
-        result="error"
-        ;;
+      etherealb) result="$GITHUB_FOLDER_COMPANY/ethereal-realms-back" ;;
+      etherealf) result="$GITHUB_FOLDER_COMPANY/ethereal-realms-frontend" ;;
+      gpb) result="$GITHUB_FOLDER_COMPANY/gp-back" ;;
+      gpf) result="$GITHUB_FOLDER_COMPANY/gp-front" ;;
+      devironment) result="$GITHUB_FOLDER_COMPANY/devironment" ;;
+      *) result="error" ;;
     esac
-    echo "$result" 
+    echo "$result"
   }
 
-  get_program_dev_containr() {
+  get_program_dev_container() {
     local container=""
     case "$1" in
-      etherealb)
-        container="web"
-        ;;
-      etherealf)
-        container="web"
-        ;;
-      gpb)
-        container=""
-        ;;
-      gpf)
-        container=""
-        ;;
-      devironment)
-        container=""
-        ;;
-      *)
-        container="error"
-        ;;
+      etherealb|etherealf) container="web" ;;
+      gpb|gpf|devironment) container="" ;;
+      *) container="error" ;;
     esac
-    echo "$container" 
-  }
-
-  hoshome(){
-    cd $HOME/HOStudios
+    echo "$container"
   }
 
   hoscode() {
-    local programpath=$(get_program_path "$2")
-    if [ $programpath = "error" ]; then
-        echo "Argumento no reconocido. Por favor usa $validprograms."
-        exit 1
+    local programpath
+    programpath=$(get_program_path "$2")
+    if [ "$programpath" = "error" ]; then
+      echo "Argumento no reconocido. Por favor usa $validprograms."
+      exit 1
     fi
-    code $programpath
+    code "$programpath"
   }
-  
+
   hosrcode() {
-    local programcontainer=$(get_program_dev_containr "$2")
-    if [ $programcontainer = "error" ]; then
-        echo "Argumento no reconocido. Por favor usa $validprograms."
-        exit 1
+    local programcontainer
+    programcontainer=$(get_program_dev_container "$2")
+    if [ "$programcontainer" = "error" ]; then
+      echo "Argumento no reconocido. Por favor usa $validprograms."
+      exit 1
     fi
-    if [ $programcontainer = "" ]; then
-        echo log_info("El programa no posee dev-container o bien no esta configurado en deviroment.")
-        echo log_info("Revise si hay actualizaciones pendientes en deviroment o consulte en la documentacion")
-        echo log_info("En caso de no encontrarlo y ser necesario solicite con su encargado la implementacion de un contenedor de desarrollo")
-        exit 1
-    if
-    code --folder-uri=vscode-remote://"$programcontainer"+%vscode_remote_hex%/app
+    if [ -z "$programcontainer" ]; then
+      echo "El programa no posee dev-container o no está configurado en deviroment."
+      echo "Revise si hay actualizaciones pendientes en deviroment o consulte en la documentación."
+      echo "En caso de no encontrarlo y ser necesario, solicite la implementación de un contenedor de desarrollo."
+      exit 1
+    fi
+    local CONTAINER_NAME="$2"_"$programcontainer"
+    if ! docker ps -a --format '{{.Names}}' | grep -q "^${CONTAINER_NAME}$"; then
+      hoscompose "none" "$2" up -d
+    fi
+    code --folder-uri vscode-remote://attached-container+$(printf "$CONTAINER_NAME" | xxd -p)/app
   }
 
   hoscompose() {
     local actualpath="$PWD"
-    local programpath=$(get_program_path "$2")
-    if [ $programpath = "error" ]; then
-        echo "Argumento no reconocido. Por favor usa $validprograms."
-        exit 1
+    local programpath
+    programpath=$(get_program_path "$2")
+    if [ "$programpath" = "error" ]; then
+      echo "Argumento no reconocido. Por favor usa $validprograms."
+      exit 1
     fi
-    cd $programpath
+    cd "$programpath"
     docker compose "${@:3}"
-    cd $actualpath
+    cd "$actualpath"
+  }
+
+  hosattach(){
+    local programcontainer
+    programcontainer=$(get_program_dev_container "$2")
+    if [ "$programcontainer" = "error" ]; then
+      echo "Argumento no reconocido. Por favor usa $validprograms."
+      exit 1
+    fi
+    local CONTAINER_NAME="$2"_"$programcontainer"
+    docker exec -it $CONTAINER_NAME zsh
   }
 
   run_show_help(){
     help_file="$PROJECT_DIR/src/commands/show_help/main.sh"
-    ShowHelp $help_file
+    ShowHelp "$help_file"
   }
 
   initialize "$@"

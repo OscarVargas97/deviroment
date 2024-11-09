@@ -34,6 +34,14 @@ obtener_distribucion(){
     OS_ID=$(grep ^ID= /etc/os-release | cut -d'=' -f2 | tr -d '"')
 }
 
+#install_xxd_fedora(){
+#
+#}
+#
+#install_xxd_ubuntu(){
+#    
+#}
+
 install_docker_fedora(){
     echo "Instalando Docker en Fedora..."
     # Aquí agregarías los comandos específicos para instalar Docker en Fedora

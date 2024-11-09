@@ -6,10 +6,16 @@ if [[ -n $BASH_PROGRAM_INSTALLED ]]; then
 fi
 BASH_PROGRAM_INSTALLED=true
 
+
 PROJECT_DIR=$(cd "$(dirname "$0")"; pwd)
 PROJECT_ROOT=$(dirname "$PROJECT_DIR")
+GITHUB_FOLDER_COMPANY=$HOME/HOStudios
 
 hos() {
+  if [ "$1" = "home" ]; then
+    cd "$GITHUB_FOLDER_COMPANY"
+    return 0
+  fi
   (
     source $PROJECT_DIR/modules/index.sh
     source $PROJECT_DIR/src/index.sh
