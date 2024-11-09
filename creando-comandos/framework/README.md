@@ -1,4 +1,4 @@
-# rflexsh Framework
+# hos Framework
 
 ## Descripción
 
@@ -9,7 +9,7 @@ Agrega un nuevo comando a un proyecto o al framework.
 
 **Uso:**
 ```sh
-rflexsh add_command
+hos add_command
 ```
 
 **Flags**
@@ -17,5 +17,5 @@ rflexsh add_command
 **Ejemplo de uso**
 ```sh
 # Crear un comando llamado 'command1'
-rflexsh add_command command1
+hos add_command command1
 ```

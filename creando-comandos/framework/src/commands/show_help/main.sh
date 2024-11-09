@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "Uso: rflexsh {comando}"
+echo "Uso: hos {comando}"
 echo ""
 echo "Comandos disponibles:"
 # New_Commands:

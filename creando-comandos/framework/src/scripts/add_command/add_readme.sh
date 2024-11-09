@@ -6,7 +6,7 @@ get_add_readme()
 
 **Uso:**
 ```sh
-rflexsh add_command
+hos add_command
 ```
 
 **Flags**
@@ -15,5 +15,5 @@ rflexsh add_command
 **Ejemplo de uso**
 ```sh
 # 
-rflexsh ñ'
+hos ñ'
 }
