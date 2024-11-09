@@ -2,7 +2,7 @@
 
 PATHP=/usr/share/
 DEVFOLDER=deviroment
-DEVPATH=/usr/share/deviroment
+DEVPATH=/usr/share/$DEVFOLDER
 HOSPATH="$HOME/HOStudios"
 HOSNAME="HOStudios"
 PROYECTOS=("ethereal-realms-back" "ethereal-realms-frontend" "gp-back" "gp-front")
@@ -29,19 +29,31 @@ main(){
         uninstall_source
     fi
 }
-
+#########################  comandos auxiliares #############################
 obtener_distribucion(){
     OS_ID=$(grep ^ID= /etc/os-release | cut -d'=' -f2 | tr -d '"')
 }
+#########################  xxd #############################
+install_xxd_fedora(){
+    echo "Instalando Docker en xxd..."
+    sudo dnf install -y xxd
+}
 
-#install_xxd_fedora(){
-#
-#}
-#
-#install_xxd_ubuntu(){
-#    
-#}
+install_xxd_ubuntu(){
+    echo "Instalando Docker en xxd..."
+    sudo apt install -y xxd
+}
 
+install_xxd(){
+    if ! command -v xxd &> /dev/null; then
+        echo "xxd no está instalado. Instalando xxd..."
+        "install_xxd_$OS_ID"
+        echo "xxd ha sido instalado correctamente."
+    else
+        echo "xxd ya está instalado."
+    fi
+}
+#########################  docker #############################
 install_docker_fedora(){
     echo "Instalando Docker en Fedora..."
     # Aquí agregarías los comandos específicos para instalar Docker en Fedora
@@ -74,7 +86,7 @@ install_docker(){
         echo "Docker ya está instalado."
     fi
 }
-
+#########################  docker compose #############################
 install_docker_compose_fedora(){
     sudo dnf update -y
     sudo dnf install -y docker-compose
@@ -99,7 +111,7 @@ install_docker_compose(){
         echo "Docker Compose y esta instalado"
     fi
 }
-
+#########################  git #############################
 install_git_fedora(){
     # Actualizar paquetes e instalar Git en Fedora
     sudo dnf update -y
@@ -127,7 +139,7 @@ install_git(){
         echo "Git ya está instalado."
     fi
 }
-
+#########################  deviroment #############################
 install_deviroment() {
     if [ -d "$DEVPATH" ]; then
         read -p "El directorio $DEVPATH ya existe. ¿Deseas reemplazarlo? (s/n): " choice
@@ -177,7 +189,7 @@ uninstall_deviroment() {
             ;;
     esac
 }
-
+######################### alias #############################
 install_alias() {
     # Variables
     COMMANDS_FILE="/usr/share/deviroment/commands/main.sh"
@@ -217,7 +229,7 @@ uninstall_source() {
         echo "Comando source eliminado de $HOME/.zshrc."
     fi
 }
-
+#########################  carpetas #############################
 crear_carpeta_hostudios(){
     if [ -d "$HOSPATH" ]; then
         echo "La carpeta ya existe"
