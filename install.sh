@@ -4,14 +4,14 @@
 ## campos editables
 COMPANY_NAME="HOStudios"
 COMPANY_GIT_NAME=HappyOtterStudios
-  #Alias a utilizar             #Nombre repo github                 #Nombre contenedor desarrollo (-= No tiene) 
-
+  #Alias a utilizar             #Nombre repo github                 #Nombre contenedor desarrollo ('-'= No tiene) 
 PROYECTOS=(
   "etherealb"                   "ethereal-realms-back"              "etherealb_web"
   "etherealf"                   "ethereal-realms-frontend"          "etherealf_web"
   "gpb"                         "gp-back"                           "-"
   "gpf"                         "gp-front"                          "-"
   "devironment"                 "devironment"                       "-"
+  "test"                        "test"                              "test_web"
 )
 
 ## Campos Estaticos

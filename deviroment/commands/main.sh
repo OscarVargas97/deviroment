@@ -21,7 +21,20 @@ hos() {
   if [ "$1" = "home" ]; then
     cd "$GITHUB_FOLDER_COMPANY"
     return 0
+  elif [ "$1" = "cd" ]; then
+    cd $(   
+          source $PROJECT_DIR/src/programs.sh
+          local programpath
+          programpath=$(get_program_path $2)
+          if [ "$programpath" = "error" ]; then
+            echo "Argumento no reconocido. Por favor usa $alias_programs."
+            exit 1
+          fi
+          code "$programpath"
+        )
+    return 0
   fi
+
   (
     source $PROJECT_DIR/modules/index.sh
     source $PROJECT_DIR/src/index.sh
