@@ -29,3 +29,7 @@ get_program_dev_container() {
   done
   echo "error"
 }
+
+error_programs_msg(){
+  echo "Argumento no reconocido. Por favor usa ${alias_programs[@]}."
+}

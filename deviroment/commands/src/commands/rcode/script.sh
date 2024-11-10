@@ -3,8 +3,7 @@ comprcode() {
     local programcontainer
     programcontainer=$(get_program_dev_container "$2")
     if [ "$programcontainer" = "error" ]; then
-      log_warning "Su programa no es un programa valido, 
-                                           Programas validos: $alias_programs."
+      error_programs_msg
       exit 1
     fi
     if [ -z "$programcontainer" ]; then
