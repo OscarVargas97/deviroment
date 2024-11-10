@@ -13,7 +13,7 @@ fi
 BASH_PROGRAM_INSTALLED=true
 
 
-PROJECT_DIR=$(cd "$(dirname "$0")"; pwd)
+PROJECT_DIR=/usr/share/deviroment/commands
 PROJECT_ROOT=$(dirname "$PROJECT_DIR")
 GITHUB_FOLDER_COMPANY=$HOME/HOStudios
 
