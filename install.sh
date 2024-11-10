@@ -46,6 +46,7 @@ main(){
         install_alias
         log_warning "Para ejecutar los comandos en su consola, abra una nueva terminal para actualizar el rc"
         crear_carpeta_company
+        reboot
     elif [[ "$respuesta" == "un" ]]; then
         log_info "Iniciando desinstalación..."
         #Advertir que no se desinstalaran ni git, ni docker, ni docker-compose
@@ -146,6 +147,7 @@ install_docker_compose_fedora(){
     # Verificar instalación
     docker-compose --version
     log_success "Docker Compose instalado correctamente en Fedora."
+    sudo usermod -aG docker $USER
 }
 
 install_docker_compose_ubuntu(){
@@ -155,6 +157,7 @@ install_docker_compose_ubuntu(){
     # Verificar instalación
     docker-compose --version
     log_success "Docker Compose instalado correctamente en Ubuntu."
+    sudo usermod -aG docker $USER
 }
 
 install_docker_compose(){
