@@ -1,5 +1,4 @@
-# Instalador de Entorno de Desarrollo - `install_deviroment.sh`
-
+# Entorno de Desarrollo
 Este script permite instalar y configurar un entorno de desarrollo automatizado, gestionando la instalación de herramientas esenciales como Docker, Docker Compose, Git, y `xxd`. También crea la estructura de directorios necesarios para los proyectos de la empresa y clona los repositorios de GitHub indicados. Además, configura los aliases necesarios para facilitar el uso de los comandos.
 
 ## Sistemas Compatibles
